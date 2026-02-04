@@ -1,4 +1,8 @@
-const MAIN_IMAGE_PATHS = ["public/assets/pancho-main.png", "public/assets/pancho-base.png"];
+const MAIN_IMAGE_PATHS = [
+  "public/assets/pancho-main.png",
+  "public/assets/pancho-base.png",
+  "public/assets/rotations/image1.png",
+];
 const ROTATION_MANIFEST_PATH = "public/assets/rotation-images.json";
 const ROTATION_FOLDERS = ["public/assets/rotations", "public/assets", "public/assets/variants", "public/assets/images"];
 
@@ -747,8 +751,8 @@ function numberedCandidates() {
   const files = [];
   const exts = ["png", "jpg", "jpeg", "webp"];
 
-  // Keep this focused to avoid thousands of 404 requests.
-  for (let i = 1; i <= 120; i += 1) {
+  // Prioritize the current production naming: image1.png ... image45.png.
+  for (let i = 1; i <= 60; i += 1) {
     for (const ext of exts) {
       files.push(`public/assets/rotations/image${i}.${ext}`);
       files.push(`public/assets/rotations/image-${i}.${ext}`);
@@ -802,22 +806,20 @@ async function loadDirectoryCandidates() {
 
 async function loadRotationImages() {
   const seen = new Set();
-  const loaded = [];
   const manifestCandidates = await loadManifestCandidates();
   const directoryCandidates = await loadDirectoryCandidates();
   const fallbackCandidates = directoryCandidates.length ? [] : numberedCandidates();
-  const candidates = [...manifestCandidates, ...directoryCandidates, ...fallbackCandidates];
-
-  for (const src of candidates) {
-    if (seen.has(src)) continue;
+  const candidates = [...manifestCandidates, ...directoryCandidates, ...fallbackCandidates].filter((src) => {
+    if (seen.has(src)) return false;
     seen.add(src);
-    try {
-      const img = await tryLoadImage(src);
-      loaded.push({ src, img });
-    } catch {
-      // ignore missing files
-    }
-  }
+    return true;
+  });
+
+  // Load in parallel so production doesn't block on serial 404 checks.
+  const results = await Promise.allSettled(candidates.map(async (src) => ({ src, img: await tryLoadImage(src) })));
+  const loaded = results
+    .filter((r) => r.status === "fulfilled")
+    .map((r) => r.value);
 
   imagePool = [...imagePool, ...loaded];
   if (!imagePool.length) activeImage = null;
