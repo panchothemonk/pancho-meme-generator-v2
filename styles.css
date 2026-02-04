@@ -1,0 +1,188 @@
+:root {
+  --bg: #000000;
+  --card: #111111;
+  --ink: #f9d9eb;
+  --muted: #bc8daa;
+  --accent: #ff3ea5;
+  --accent-hover: #e02d91;
+  --border: #3c2032;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Verdana", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card {
+  background: linear-gradient(180deg, #151515, #0d0d0d);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+}
+
+h1 {
+  margin: 0;
+  letter-spacing: 0.4px;
+}
+
+.subtitle {
+  margin: 0.35rem 0 0.9rem;
+  color: var(--muted);
+}
+
+#memeCanvas {
+  width: min(100%, 500px);
+  max-height: 72vh;
+  display: block;
+  border-radius: 16px;
+  border: 2px solid var(--border);
+  background: #090909;
+}
+
+.moment,
+.status {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+}
+
+.format-row,
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.setting-grid {
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.field select,
+.field input[type="range"] {
+  width: 100%;
+}
+
+.field select {
+  border: 1px solid #c21873;
+  background: #1b1218;
+  color: #ffdff0;
+  border-radius: 10px;
+  padding: 0.6rem;
+}
+
+.actions {
+  grid-template-columns: 1fr;
+  margin-top: 0.65rem;
+}
+
+button {
+  border: 1px solid #c21873;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #ffffff;
+  padding: 0.8rem 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+button:hover {
+  background: var(--accent-hover);
+  cursor: pointer;
+}
+
+button.active {
+  background: #ff86c9;
+  color: #2f1122;
+}
+
+.toggle {
+  margin-top: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.toggle input {
+  width: 18px;
+  height: 18px;
+}
+
+.list-grid {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.list-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.7rem;
+  background: #100d11;
+}
+
+.list-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.list {
+  display: grid;
+  gap: 0.45rem;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.list button {
+  text-align: left;
+  font-size: 0.84rem;
+  padding: 0.55rem 0.65rem;
+}
+
+@media (min-width: 980px) {
+  .app {
+    max-width: 1240px;
+    margin: 0 auto;
+    grid-template-columns: minmax(420px, 620px) 1fr;
+  }
+
+  .controls {
+    align-self: start;
+  }
+
+  .actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .setting-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .list-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

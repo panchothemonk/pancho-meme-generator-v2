@@ -1,0 +1,26 @@
+{
+  "good": [
+    { "id": "good_01", "label": "Beach Day", "path": "public/assets/backgrounds/good/good-01.jpg" },
+    { "id": "good_02", "label": "Birthday Party", "path": "public/assets/backgrounds/good/good-02.jpg" },
+    { "id": "good_03", "label": "Promotion Day", "path": "public/assets/backgrounds/good/good-03.jpg" },
+    { "id": "good_04", "label": "Vacation View", "path": "public/assets/backgrounds/good/good-04.jpg" },
+    { "id": "good_05", "label": "Concert Night", "path": "public/assets/backgrounds/good/good-05.jpg" },
+    { "id": "good_06", "label": "Road Trip", "path": "public/assets/backgrounds/good/good-06.jpg" },
+    { "id": "good_07", "label": "Cafe Chill", "path": "public/assets/backgrounds/good/good-07.jpg" },
+    { "id": "good_08", "label": "Pool Party", "path": "public/assets/backgrounds/good/good-08.jpg" },
+    { "id": "good_09", "label": "Lucky Day", "path": "public/assets/backgrounds/good/good-09.jpg" },
+    { "id": "good_10", "label": "Big Win", "path": "public/assets/backgrounds/good/good-10.jpg" }
+  ],
+  "bad": [
+    { "id": "bad_01", "label": "Missed The Bus", "path": "public/assets/backgrounds/bad/bad-01.jpg" },
+    { "id": "bad_02", "label": "Stuck In Traffic", "path": "public/assets/backgrounds/bad/bad-02.jpg" },
+    { "id": "bad_03", "label": "Rainy Day Fail", "path": "public/assets/backgrounds/bad/bad-03.jpg" },
+    { "id": "bad_04", "label": "Spilled Coffee", "path": "public/assets/backgrounds/bad/bad-04.jpg" },
+    { "id": "bad_05", "label": "Flat Tire", "path": "public/assets/backgrounds/bad/bad-05.jpg" },
+    { "id": "bad_06", "label": "Phone Dead", "path": "public/assets/backgrounds/bad/bad-06.jpg" },
+    { "id": "bad_07", "label": "Late Alarm", "path": "public/assets/backgrounds/bad/bad-07.jpg" },
+    { "id": "bad_08", "label": "Lost Wallet", "path": "public/assets/backgrounds/bad/bad-08.jpg" },
+    { "id": "bad_09", "label": "Flight Delayed", "path": "public/assets/backgrounds/bad/bad-09.jpg" },
+    { "id": "bad_10", "label": "Oops Message", "path": "public/assets/backgrounds/bad/bad-10.jpg" }
+  ]
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pancho Meme Generator V2</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="card preview-card">
+        <h1>Pancho Meme Generator V2</h1>
+        <p class="subtitle">Same Pancho. Different crypto chaos.</p>
+        <canvas id="memeCanvas" width="1080" height="1350" aria-label="Pancho meme preview"></canvas>
+        <p class="moment">Template: <strong id="templateLabel">-</strong> | Format: <strong id="formatLabel">4:5</strong></p>
+        <p id="status" class="status"></p>
+      </section>
+
+      <section class="card controls">
+        <div class="setting-grid">
+          <label class="field">
+            <span>Meme Mode</span>
+            <select id="memeMode">
+              <option value="all">All</option>
+              <option value="bull">Bull</option>
+              <option value="bear">Bear</option>
+              <option value="degen">Degen</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Spice Level: <strong id="spiceValue">Savage</strong></span>
+            <input id="spiceSlider" type="range" min="1" max="3" step="1" value="2" />
+          </label>
+        </div>
+        <div class="format-row">
+          <button class="format-btn active" data-format="portrait">4:5</button>
+          <button class="format-btn" data-format="square">1:1</button>
+          <button class="format-btn" data-format="landscape">16:9</button>
+        </div>
+        <div class="actions">
+          <button id="generate">Generate Meme</button>
+          <button id="copyCaption">Copy Caption</button>
+          <button id="favorite">Favorite</button>
+          <button id="download">Download Meme</button>
+        </div>
+        <label class="toggle">
+          <input id="chaosMode" type="checkbox" checked />
+          <span>Chaos stickers on</span>
+        </label>
+
+        <div class="list-grid">
+          <section class="list-card">
+            <h3>Favorites</h3>
+            <div id="favoritesList" class="list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
