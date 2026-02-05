@@ -1,11 +1,11 @@
 :root {
   --bg: #ffffff;
-  --card: #111111;
-  --ink: #f9d9eb;
-  --muted: #bc8daa;
+  --card: #ffffff;
+  --ink: #2d1827;
+  --muted: #7a5870;
   --accent: #ff3ea5;
   --accent-hover: #e02d91;
-  --border: #3c2032;
+  --border: #f2c0de;
 }
 
 * {
@@ -28,7 +28,7 @@ body {
 }
 
 .card {
-  background: linear-gradient(180deg, #151515, #0d0d0d);
+  background: linear-gradient(180deg, #ffffff, #fff6fb);
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 1rem;
@@ -51,7 +51,7 @@ h1 {
   display: block;
   border-radius: 16px;
   border: 2px solid var(--border);
-  background: #090909;
+  background: #f5f5f5;
 }
 
 .moment,
@@ -87,8 +87,8 @@ h1 {
 
 .field select {
   border: 1px solid #c21873;
-  background: #1b1218;
-  color: #ffdff0;
+  background: #ffffff;
+  color: #2d1827;
   border-radius: 10px;
   padding: 0.6rem;
 }
@@ -142,7 +142,7 @@ button.active {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.7rem;
-  background: #100d11;
+  background: #ffffff;
 }
 
 .list-card h3 {
