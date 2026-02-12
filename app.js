@@ -745,8 +745,8 @@ function numberedCandidates() {
   const files = [];
   const exts = ["png", "jpg", "jpeg", "webp"];
 
-  // Prioritize the current production naming: image1.png ... image45.png.
-  for (let i = 1; i <= 60; i += 1) {
+  // Primary production naming: image1.png, image2.png, ...
+  for (let i = 1; i <= 300; i += 1) {
     for (const ext of exts) {
       files.push(`public/assets/rotations/image${i}.${ext}`);
       files.push(`public/assets/rotations/image-${i}.${ext}`);
@@ -802,7 +802,7 @@ async function loadRotationImages() {
   const seen = new Set();
   const manifestCandidates = await loadManifestCandidates();
   const directoryCandidates = await loadDirectoryCandidates();
-  const fallbackCandidates = directoryCandidates.length ? [] : numberedCandidates();
+  const fallbackCandidates = numberedCandidates();
   const candidates = [...manifestCandidates, ...directoryCandidates, ...fallbackCandidates].filter((src) => {
     if (seen.has(src)) return false;
     seen.add(src);
