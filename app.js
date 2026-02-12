@@ -23,8 +23,6 @@ const ui = {
   generate: document.getElementById("generate"),
   favorite: document.getElementById("favorite"),
   download: document.getElementById("download"),
-  copyCaption: document.getElementById("copyCaption"),
-  chaosMode: document.getElementById("chaosMode"),
   favoritesList: document.getElementById("favoritesList"),
   formatButtons: Array.from(document.querySelectorAll(".format-btn")),
 };
@@ -535,7 +533,7 @@ function roundRectStroke(x, y, w, h, r) {
 }
 
 function drawChaos() {
-  if (!ui.chaosMode.checked) return;
+  if (!ui.chaosMode || !ui.chaosMode.checked) return;
 
   const w = ui.canvas.width;
   const h = ui.canvas.height;
@@ -703,11 +701,7 @@ function bindEvents() {
     setStatus("Saved to favorites.");
   });
   ui.download.addEventListener("click", downloadCurrent);
-  ui.copyCaption.addEventListener("click", copyCaption);
-  ui.chaosMode.addEventListener("change", () => {
-    renderCurrent();
-    setStatus(ui.chaosMode.checked ? "Chaos stickers enabled." : "Chaos stickers disabled.");
-  });
+
   ui.memeMode.addEventListener("change", () => {
     currentMode = ui.memeMode.value;
     setStatus(`Mode set to ${currentMode.toUpperCase()}.`);
