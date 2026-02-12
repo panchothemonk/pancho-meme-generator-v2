@@ -4,7 +4,6 @@ const MAIN_IMAGE_PATHS = [
   "public/assets/rotations/image1.png",
 ];
 const ROTATION_MANIFEST_PATH = "public/assets/rotation-images.json";
-const ROTATION_FOLDERS = ["public/assets/rotations", "public/assets", "public/assets/variants", "public/assets/images"];
 
 const FORMATS = {
   portrait: { label: "4:5", width: 1080, height: 1350 },
@@ -743,15 +742,9 @@ async function loadMainImage() {
 
 function numberedCandidates() {
   const files = [];
-  const exts = ["png", "jpg", "jpeg", "webp"];
-
   // Primary production naming: image1.png, image2.png, ...
   for (let i = 1; i <= 300; i += 1) {
-    for (const ext of exts) {
-      files.push(`public/assets/rotations/image${i}.${ext}`);
-      files.push(`public/assets/rotations/image-${i}.${ext}`);
-      files.push(`public/assets/rotations/image_${i}.${ext}`);
-    }
+    files.push(`public/assets/rotations/image${i}.png`);
   }
 
   return files;
@@ -768,54 +761,29 @@ async function loadManifestCandidates() {
   }
 }
 
-async function loadDirectoryCandidates() {
-  const folders = ["public/assets/rotations/", "public/assets/", "public/assets/variants/", "public/assets/images/"];
-  const found = [];
-  const seen = new Set();
+async function loadRotationImages() {
+  const manifestCandidates = await loadManifestCandidates();
+  const seen = new Set(imagePool.map((entry) => entry.src));
+  const candidates = [...manifestCandidates, ...numberedCandidates()];
+  let misses = 0;
+  let foundAny = false;
 
-  for (const folder of folders) {
+  // Sequential probing avoids flooding requests and is stable on Pages.
+  for (const src of candidates) {
+    if (seen.has(src)) continue;
     try {
-      const res = await fetch(folder);
-      if (!res.ok) continue;
-      const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const links = Array.from(doc.querySelectorAll("a"));
-
-      for (const link of links) {
-        const href = link.getAttribute("href") || "";
-        if (!href || href.includes("..") || href.endsWith("/")) continue;
-        if (!/\.(png|jpg|jpeg|webp)$/i.test(href)) continue;
-        const full = href.startsWith("http") ? href : `${folder}${href}`;
-        if (seen.has(full)) continue;
-        seen.add(full);
-        found.push(full);
-      }
+      const img = await tryLoadImage(src);
+      imagePool.push({ src, img });
+      seen.add(src);
+      foundAny = true;
+      misses = 0;
     } catch {
-      // ignore folder listing issues
+      misses += 1;
+      // Stop after a run of misses once we've started finding numbered files.
+      if (foundAny && src.includes("/rotations/image") && misses >= 20) break;
     }
   }
 
-  return found;
-}
-
-async function loadRotationImages() {
-  const seen = new Set();
-  const manifestCandidates = await loadManifestCandidates();
-  const directoryCandidates = await loadDirectoryCandidates();
-  const fallbackCandidates = numberedCandidates();
-  const candidates = [...manifestCandidates, ...directoryCandidates, ...fallbackCandidates].filter((src) => {
-    if (seen.has(src)) return false;
-    seen.add(src);
-    return true;
-  });
-
-  // Load in parallel so production doesn't block on serial 404 checks.
-  const results = await Promise.allSettled(candidates.map(async (src) => ({ src, img: await tryLoadImage(src) })));
-  const loaded = results
-    .filter((r) => r.status === "fulfilled")
-    .map((r) => r.value);
-
-  imagePool = [...imagePool, ...loaded];
   if (!imagePool.length) activeImage = null;
   else if (!activeImage) activeImage = randItem(imagePool);
 }
