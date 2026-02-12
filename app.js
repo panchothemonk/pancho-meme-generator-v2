@@ -799,17 +799,29 @@ async function boot() {
   setCanvasFormat("portrait");
 
   await loadMainImage();
+
+  // Render a first meme immediately so the canvas is populated on page load.
+  if (imagePool.length) {
+    generate();
+    setStatus("Initial meme loaded. Loading more images in background...");
+  } else {
+    setStatus("No base image found yet. Trying rotation images...");
+  }
+
+  // Continue discovering rotation images without blocking first paint.
   await loadRotationImages();
 
+  if (!currentMeme && imagePool.length) {
+    generate();
+  }
+
   if (!imagePool.length) {
-    setStatus("No image found. Add public/assets/pancho-main.png.");
+    setStatus("No image found. Add public/assets/rotations/image1.png.");
   } else if (imagePool.length > 2) {
     setStatus(`Loaded ${imagePool.length} images. Rotation mode ready.`);
   } else {
     setStatus("Loaded base image set. Add more files for rotation.");
   }
-
-  generate();
 }
 
 boot();
